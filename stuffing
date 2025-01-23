@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <string.h>
+void bitStuffing(char *input) {
+    int count = 0;
+    int length = strlen(input);
+    char result[2 * length];
+    int i = 0, j = 0;
+
+    for (i = 0; i < 8 && i < length; i++) {
+        result[j++] = input[i];
+    }
+
+    for (; i < length - 8; i++) {
+        result[j++] = input[i];
+        if (input[i] == '0') {
+            count++;
+            if (count == 5) {
+                result[j++] = '1';
+                count = 0;
+            }
+        } else {
+            count = 0;
+        }
+    }
+
+    for (; i < length; i++) {
+        result[j++] = input[i];
+    }
+
+    result[j] = '\0';
+    printf("Bit Stuffed Output: %s\n", result);
+}
+
+int main() {
+    char input[100];
+    printf("Enter the input bit string: ");
+    scanf("%s", input);
+    bitStuffing(input);
+    return 0;
+}
+
+character stuffing:
+#include <stdio.h>
+#include <string.h>
+void characterStuffing(char *input) {
+    char result[2 * strlen(input)];
+    int i = 0, j = 0;
+
+    while (strncmp(&input[i], "DLESTX", 6) == 0) {
+        for (int k = 0; k < 6; k++) {
+            result[j++] = input[i++];
+        }
+    }
+    while (strncmp(&input[i], "DLEETX", 6) != 0) {
+        if (input[i] == 'D' && input[i + 1] == 'L' && input[i + 2] == 'E') {
+            result[j++] = 'D';
+            result[j++] = 'L';
+            result[j++] = 'E';
+            result[j++] = 'D';
+            result[j++] = 'L';
+            result[j++] = 'E';
+            i += 3;
+        } else {
+            result[j++] = input[i++];
+        }
+    }
+
+    while (input[i] != '\0') {
+        result[j++] = input[i++];
+    }
+    result[j] = '\0';
+    printf("Character Stuffed Output: %s\n", result);
+}
+int main() {
+    char input[200];
+    printf("Enter the input string (including DLESTX and DLEETX): ");
+    scanf("%s", input);
+    characterStuffing(input);
+    return 0;
+}
