@@ -1,292 +1,505 @@
-s box
-#include <stdio.h>
-#define SBOX_SIZE 16
-int sbox[SBOX_SIZE]={0,14,4,13,1,2,15,11,8,3,10,6,12,5,9,7};
-int inv_sbox[SBOX_SIZE];
-void buildInverseSbox(){
-    for(int i=1;i<SBOX_SIZE;i++){
-        inv_sbox[sbox[i]]=i;
+1.Fibonacci
+
+import java.util.Scanner;
+public class fibonacci 
+{
+	static int fibRecursive(int n) 
+	{ 
+		return n <= 2 ? 1 : fibRecursive(n - 1) + fibRecursive(n - 2); 
+	}
+	static int fibIterative(int n) 
+	{
+		int a = 1, b = 1;
+		for (int i = 3; i <= n; i++) 
+		{
+			int c = a + b; a = b; b = c; 
+		}
+		return n <= 2 ? 1 : b;
+	}
+	public static void main(String[] args) 
+	{
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Enter n: ");
+		int n = scanner.nextInt();
+		System.out.println("Recursive: " + fibRecursive(n) + ", Iterative: " + fibIterative(n));
+	}
+}
+
+2.Prime numbers
+
+import java.util.Scanner;
+public class prime 
+{
+public static void main(String[] args) 
+{
+Scanner sc = new Scanner(System.in);
+System.out.print("Enter an integer: ");
+int limit = sc.nextInt();
+for (int i = 2; i <= limit; i++) 
+{
+if (isPrime(i)) System.out.print(i + " ");
+}
+}
+static boolean isPrime(int n) 
+{
+for (int i = 2; i * i <= n; i++) if (n % i == 0) return false;
+return n > 1;
+}
+}
+
+3.Palindrome
+
+import java.util.Scanner;
+public class palindrome 
+{
+public static void main(String[] args) 
+{
+Scanner sc = new Scanner(System.in);
+System.out.print("Enter a string: ");
+String str = sc.nextLine().toLowerCase();
+System.out.println(str.equals(new StringBuilder(str).reverse().toString()) ? "Palindrome" : "Not a Palindrome");
+}
+}
+
+4.Sorting
+
+import java.util.*;
+public class sorting {
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+System.out.println("Enter the number of names followed by the names:");
+String[] names = new String[sc.nextInt()]; sc.nextLine();
+for (int i = 0; i < names.length; i++) names[i] = sc.nextLine();
+Arrays.sort(names);
+System.out.println("Sorted Names:");
+Arrays.stream(names).forEach(System.out::println);
+}
+}
+
+5.runtime polymorphism
+
+class shape
+{
+	void perimeter()
+	{
+		System.out.println("Total Surrounding Length");
+	}
+}
+
+class square extends shape
+{
+	@Override
+	void perimeter()
+	{
+		System.out.println("Perimeter of Square : 4 * Side");
+	}
+}
+
+class rectangle extends shape
+{
+	@Override
+	void perimeter()
+	{
+		System.out.println("Perimeter of Rectangle : 2 * (Length + Breadth)");
+	}
+}
+
+public class rtPolymorphism
+{
+	public static void main(String args[])
+	{
+		shape myShape;
+		myShape = new square();
+		myShape.perimeter();
+		myShape = new rectangle();
+		myShape.perimeter();
+	}
+}
+
+6.Packages...
+
+User-defined :
+
+Package Code:
+
+package mypackage;
+public class MyClass {
+public void displayMessage() {
+System.out.println("Hello from MyClass in mypackage!");
+}
+}
+
+to use user-defined package, code:
+
+import mypackage.MyClass;
+public class newPackage {
+public static void main(String[] args) {
+MyClass obj = new MyClass();
+obj.displayMessage();
+}
+}
+
+Pre-defined :
+
+import java.util.Scanner;
+import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+public class predefinedpackages
+{
+public static void main(String[] args)
+{
+Scanner scanner = new Scanner(System.in);
+System.out.print("Enter your name: ");
+String name = scanner.nextLine();
+Random random = new Random();
+int randomNumber = random.nextInt(100);
+Date currentDate = new Date();
+SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+String formattedDate = formatter.format(currentDate);
+System.out.println("\nHello, " + name + "!");
+System.out.println("Your lucky number today is: " + randomNumber);
+System.out.println("Current Date and Time: " + formattedDate);
+scanner.close();
+}
+}
+
+7.StringTokenizer
+
+import java.util.Scanner;
+import java.util.StringTokenizer;
+public class StrTok
+{
+public static void main(String[] args)
+{
+System.out.print("Enter values separated by Space: ");
+Scanner scanner = new Scanner(System.in);
+StringTokenizer tokenizer=new StringTokenizer(scanner.nextLine());
+int sum=0;
+while(tokenizer.hasMoreTokens())
+sum+=Integer.parseInt(tokenizer.nextToken());
+System.out.println("Sum: "+sum);
+scanner.close();
+}
+}
+
+8.File Information
+
+import java.io.*;
+import java.util.Scanner;
+public class fileinfo
+{
+	public static void main( String args[] )
+	{
+		Scanner sc = new Scanner( System.in );
+		System.out.print("Enter File Name: ");
+		File file = new File( sc.nextLine() );
+		if( file.exists() )
+		{
+			System.out.println("File exists: Yes");
+			System.out.println("Readable: " + file.canRead() );
+			System.out.println("Writable: " + file.canWrite());
+			System.out.println("Type : " + ( file.isDirectory() ? "Directory" : "File" ) );
+			System.out.println("Size : " + file.length() + " bytes\n\nContent: ");
+			try( FileInputStream fis = new FileInputStream( file ) )
+			{
+				System.out.println( new String( fis.readAllBytes() ) );
+			}
+			catch( IOException e )
+			{
+				System.out.println("Error reading File : " + e.getMessage() );
+			}
+		}
+		else System.out.println("File does not exist.");
+		sc.close();
+	}
+}
+
+9.File Analyser
+
+import java.io.*;
+import java.util.Scanner;
+public class fileanalyse
+{
+	public static void main( String args[] )
+	{
+		Scanner sc = new Scanner( System.in );
+		System.out.print("Enter File Name: ");
+		String fileName = sc.nextLine();
+		sc.close();
+		try( BufferedReader br = new BufferedReader( new FileReader( fileName ) ) )
+		{
+			int charCount = 0, wordCount=0, lineCount=0;
+			String line;
+			while( ( line = br.readLine() ) != null )
+			{
+				lineCount++;
+				charCount += line.length();
+				wordCount += line.split("\\s+").length;
+			}
+			System.out.println("Characters: " + charCount + ", Words: " + wordCount + ", Lines: " + lineCount );
+		}
+		catch(IOException e)
+		{
+			System.out.println("Error: " + e.getMessage() );
+		}
+	}
+}
+
+10.File Viewer
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.*;
+public class FileViewer extends JFrame {
+    JTextArea textArea = new JTextArea(20, 50);
+
+    public FileViewer() {
+        JButton openButton = new JButton("Open File");
+        openButton.addActionListener(e -> {
+            JFileChooser fc = new JFileChooser();
+            if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
+                readFile(fc.getSelectedFile());
+        });
+        add(openButton, BorderLayout.NORTH);
+        add(new JScrollPane(textArea), BorderLayout.CENTER);
+        setTitle("APPLET : File Viewer");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        pack();
+        setVisible(true);
     }
-}
-void displaySbox(int box[],const char* name){
-    printf("\n%s:\n",name);
-    for(int i=1;i<SBOX_SIZE;i++){
-        printf("%2d→%2d\n",i,box[i]);
-    }
-}
-int main(){
-    displaySbox(sbox,"S-Box");
-    buildInverseSbox();
-    displaySbox(inv_sbox,"Inverse S-Box");
-    int input=9;
-    int encrypted=sbox[input];
-    int decrypted=inv_sbox[encrypted];
-    printf("\nTest:\nInput:%d→Substituted:%d→Inverse:%d\n",input,encrypted,decrypted);
-    return 0;
-}
 
-P box:
-#include <stdio.h>
-void applyPBox(int input[],int output[],int pbox[],int size){
-    for(int i=0;i<size;i++)output[i]=input[pbox[i]-1];
-}
-void displayBits(const char *label,int bits[],int size){
-    printf("%s: ",label);
-    for(int i=0;i<size;i++)printf("%d",bits[i]);
-    printf("\n");
-}
-int main(){
-    int choice,inSize,outSize,input[16],output[16],pbox[16];
-    printf("Choose:\n1.Straight\n2.Compression\n3.Expansion\nEnter choice: ");
-    scanf("%d",&choice);
-
-    if(choice==1||choice==2){
-        inSize=8;
-        printf("Enter %d-bit input: ",inSize);
-        for(int i=0;i<inSize;i++)scanf("%d",&input[i]);
-        outSize=(choice==1)?8:6;
-    }else if(choice==3){
-        inSize=4;outSize=6;
-        printf("Enter %d-bit input: ",inSize);
-        for(int i=0;i<inSize;i++)scanf("%d",&input[i]);
-    }else{
-        printf("Invalid choice");return 0;
-    }
-
-    printf("Enter %d P-box positions (1 to %d): ",outSize,inSize);
-    for(int i=0;i<outSize;i++)scanf("%d",&pbox[i]);
-
-    applyPBox(input,output,pbox,outSize);
-    displayBits("Encrypted Output",output,outSize);
-    return 0;
-}
-CRC-12:
-#include <stdio.h>
-#define POLY 0x180F
-#define CRC_BITS 12
-#define DATA_BITS 12
-
-unsigned int computeCRC(unsigned int data, int totalBits) {
-    for (int i = totalBits - 1; i >= CRC_BITS; i--) {
-        if ((data >> i) & 1)
-            data ^= (POLY << (i - CRC_BITS));
-    }
-    return data;
-}
-
-int main() {
-    int choice;
-    unsigned int data, codeword;
-    while(1){
-        printf("0. Exit\n1. Calculate CRC\n2. Verify Received Data\nChoice: ");
-        scanf("%d", &choice);
-
-        if (choice == 0) break;
-        else if (choice == 1) {
-            printf("Enter hex data (up to 0xFFF): ");
-            scanf("%x", &data);
-            unsigned int full = computeCRC(data << CRC_BITS, DATA_BITS + CRC_BITS);
-            unsigned int crc = full & 0xFFF;
-            codeword = (data << CRC_BITS) | crc;
-            printf("CRC-12: %03X\n", crc);
-            printf("Codeword: %06X\n", codeword);
-        } else if (choice == 2) {
-            printf("Enter received codeword: ");
-            scanf("%x", &codeword);
-            unsigned int result = computeCRC(codeword, DATA_BITS + CRC_BITS);
-            if ((result & 0xFFF) == 0)
-                printf("CRC Valid\n");
-            else
-                printf("CRC Error\n");
-        } else {
-            printf("Invalid choice\n");
+    private void readFile(File file) {
+        try (BufferedReader r = new BufferedReader(new FileReader(file))) {
+            textArea.setText(r.lines().reduce("", (a, b) -> a + b + "\n"));
+        } catch (IOException ex) {
+            textArea.setText("Error: " + ex.getMessage());
         }
     }
-    return 0;
-}
 
-
-CRC-16:
-#include <stdio.h>
-#define POLY 0x8005
-#define CRC_BITS 16
-#define DATA_BITS 16
-unsigned int computeCRC(unsigned int data, int totalBits) {
-    for (int i = totalBits - 1; i >= CRC_BITS; i--) {
-        if ((data >> i) & 1)
-            data ^= (POLY << (i - CRC_BITS));
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(FileViewer::new);
     }
-    return data;
 }
-int main() {
-    int choice;
-    unsigned int data, codeword;
-    printf("1. Calculate CRC\n2. Verify Received Data\n");
-    while(1){
-        printf("Choice: ");
-        scanf("%d", &choice);
 
-        if (choice == 1) {
-            printf("Enter hex data: ");
-            scanf("%x", &data);
-            unsigned int full = computeCRC(data << CRC_BITS, DATA_BITS + CRC_BITS);
-            unsigned int crc = full & 0xFFFF;
-            codeword = (data << CRC_BITS) | crc;
-            printf("CRC-16: %04X\n", crc);
-            printf("Codeword: %08X\n", codeword);
-        } else if (choice == 2) {
-            printf("Enter received codeword: ");
-            scanf("%x", &codeword);
-            unsigned int result = computeCRC(codeword, DATA_BITS + CRC_BITS);
-            if ((result & 0xFFFF) == 0)
-                printf("CRC Valid\n");
-            else
-                printf(" CRC Error\n");
+11.Calculator
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Calculator extends JFrame implements ActionListener {
+    private JTextField display;
+    private double num1, num2;
+    private char operator;
+
+    public Calculator() {
+        setTitle("Simple Calculator");
+        setSize(280, 350);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        display = new JTextField();
+        display.setEditable(false);
+        display.setFont(new Font("Arial", Font.BOLD, 18));
+        display.setHorizontalAlignment(JTextField.RIGHT);
+        display.setPreferredSize(new Dimension(280, 50));
+        add(display, BorderLayout.NORTH);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 3, 5, 5));
+
+        String[] buttons = {"7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", "%", "=", "+", "C"};
+
+        for (String text : buttons) {
+            JButton button = new JButton(text);
+            button.setFont(new Font("Arial", Font.BOLD, 16));
+            button.addActionListener(this);
+            panel.add(button);
+        }
+
+        add(panel, BorderLayout.CENTER);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+
+        if (Character.isDigit(command.charAt(0))) {
+            display.setText(display.getText() + command);
+        } else if (command.equals("C")) {
+            display.setText("");
+            num1 = num2 = 0;
+        } else if (command.equals("=")) {
+            num2 = Double.parseDouble(display.getText());
+            String result;
+            switch (operator) {
+                case '+': result = String.valueOf(num1 + num2); break;
+                case '-': result = String.valueOf(num1 - num2); break;
+                case '*': result = String.valueOf(num1 * num2); break;
+                case '/': result = (num2 == 0) ? "Can't divide by zero" : String.valueOf(num1 / num2); break;
+                case '%': result = (num2 == 0) ? "Can't divide by zero" : String.valueOf(num1 % num2); break;
+                default: result = "";
+            }
+            display.setText(result);
         } else {
-            printf("Invalid choice\n");
+            num1 = Double.parseDouble(display.getText());
+            operator = command.charAt(0);
+            display.setText("");
         }
     }
-    return 0;
-}
-CRC-CCITT:
-#include <stdio.h>
-#define POLY 0x1021
-#define CRC_BITS 16
-#define DATA_BITS 16
 
-unsigned int computeCRC(unsigned int data, int totalBits) {
-    for (int i = totalBits - 1; i >= CRC_BITS; i--) {
-        if ((data >> i) & 1)
-            data ^= (POLY << (i - CRC_BITS));
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Calculator calculator = new Calculator();
+            calculator.setVisible(true);
+        });
     }
-    return data;
 }
 
-int main() {
-    int choice;
-    unsigned int data, codeword;
-    while(1){
-        printf("0. Exit\n1. Calculate CRC\n2. Verify Received Data\nChoice: ");
-        scanf("%d", &choice);
+12.Mouse Events
 
-        if (choice == 0) break;
-        else if (choice == 1) {
-            printf("Enter hex data: ");
-            scanf("%x", &data);
-            unsigned int full = computeCRC(data << CRC_BITS, DATA_BITS + CRC_BITS);
-            unsigned int crc = full & 0xFFFF;
-            codeword = (data << CRC_BITS) | crc;
-            printf("CRC-CCITT: %04X\n", crc);
-            printf("Codeword: %08X\n", codeword);
-        } else if (choice == 2) {
-            printf("Enter received codeword: ");
-            scanf("%x", &codeword);
-            unsigned int result = computeCRC(codeword, DATA_BITS + CRC_BITS);
-            if ((result & 0xFFFF) == 0)
-                printf("CRC Valid\n");
-            else
-                printf("CRC Error\n");
-        } else {
-            printf("Invalid choice\n");
+import javax.swing.*;
+import java.awt.event.*;
+public class MouseEvents extends JFrame 
+{
+    public MouseEvents() 
+    {
+        JLabel label = new JLabel("Perform a mouse action");
+        add(label);
+        setSize(400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+        addMouseListener(new MouseAdapter() 
+	{
+            public void mouseClicked(MouseEvent e) { label.setText("Clicked at (" + e.getX() + ", " + e.getY() + ")"); }
+            public void mousePressed(MouseEvent e) { label.setText("Pressed"); }
+            public void mouseReleased(MouseEvent e) { label.setText("Released"); }
+            public void mouseEntered(MouseEvent e) { label.setText("Entered"); }
+            public void mouseExited(MouseEvent e)  { label.setText("Exited"); }
+        }
+	);
+    }
+    public static void main(String[] args) 
+    {
+        SwingUtilities.invokeLater(MouseEvents::new);
+    }
+}
+
+13. Thread Life cycle
+
+class MyThread extends Thread {
+    public void run() {
+        try { Thread.sleep(500); } catch (Exception e) {}
+        System.out.println("Thread finished.");
+    }
+}
+
+public class ThreadLifeCycle {
+    public static void main(String[] args) throws Exception {
+        MyThread t = new MyThread();
+        System.out.println("State after creation: " + t.getState());
+        t.start();
+        System.out.println("State after start(): " + t.getState());
+        Thread.sleep(100);
+        System.out.println("State while running: " + t.getState());
+        t.join();
+        System.out.println("State after completion: " + t.getState());
+    }
+}
+
+14.pie chart
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
+public class PieChart extends JFrame {
+    ArrayList<String> labels = new ArrayList<>();
+    ArrayList<Integer> values = new ArrayList<>();
+    public PieChart() {
+        JTextField lField = new JTextField(6);
+        JTextField vField = new JTextField(3);
+        JButton btn = new JButton("Add");
+        btn.addActionListener(e -> {
+            try {
+                labels.add(lField.getText());
+                values.add(Integer.parseInt(vField.getText()));
+                lField.setText(""); vField.setText(""); repaint();
+            } catch (Exception ex) {}
+        });
+        JPanel top = new JPanel();
+        top.add(new JLabel("Label:"));
+        top.add(lField);
+        top.add(new JLabel("Value:"));
+        top.add(vField);
+        top.add(btn);
+        add(top, "North");
+        add(new JPanel() {
+            protected void paintComponent(Graphics g) {
+                int sum = values.stream().mapToInt(i -> i).sum();
+                int angle = 0;
+                for (int i = 0; i < values.size(); i++) {
+                    int a = (int) Math.round((double) values.get(i) * 360 / sum);
+                    g.setColor(Color.getHSBColor(i / 10f, .7f, .9f));
+                    g.fillArc(100, 100, 200, 200, angle, a); 
+                    angle += a;
+                    g.fillRect(320, 100 + i * 15, 10, 10);
+                    g.setColor(Color.BLACK);
+                    g.drawString(labels.get(i), 335, 110 + i * 15);
+                }
+            }
+        }, "Center");
+        setSize(450, 450);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+    public static void main(String[] a) {
+        SwingUtilities.invokeLater(PieChart::new);
+    }
+}
+
+15. queue
+
+import java.util.*;
+
+class QE extends Exception { QE(String m) { super(m); } }
+
+class Q {
+    int[] q; int f = 0, r = -1;
+    Q(int n) { q = new int[n]; }
+
+    void enq(int x) throws QE {
+        if (r == q.length - 1) throw new QE("Full");
+        q[++r] = x;
+    }
+
+    int deq() throws QE {
+        if (f > r) throw new QE("Empty");
+        return q[f++];
+    }
+
+    void show() {
+        for (int i = f; i <= r; i++) System.out.print(q[i] + " ");
+        System.out.println();
+    }
+}
+
+public class Queue {
+    public static void main(String[] a) {
+        Scanner sc = new Scanner(System.in);
+        Q q = new Q(3);
+        while (true) {
+            System.out.print("1-Enq 2-Deq 3-Show 4-Exit: ");
+            int ch = sc.nextInt();
+            try {
+                if (ch == 1) q.enq(sc.nextInt());
+                else if (ch == 2) System.out.println("Out: " + q.deq());
+                else if (ch == 3) q.show();
+                else if (ch == 4) break;
+            } catch (QE e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
-    return 0;
 }
-
-Recommended Primality Test#include <stdio.h>
-#include <stdlib.h>
-long long power(long long a, long long b, long long mod) {
-    long long res = 1;
-    a %= mod;
-    while (b) {
-        if (b & 1) res = (res * a) % mod;
-        a = (a * a) % mod;
-        b >>= 1;
-    }
-    return res;
-}
-int millerTest(long long d, long long n) {
-    long long a = 2 + rand() % (n - 4);
-    long long x = power(a, d, n);
-    if (x == 1 || x == n - 1) return 1;
-    while (d != n - 1) {
-        x = (x * x) % n;
-        d *= 2;
-        if (x == 1) return 0;
-        if (x == n - 1) return 1;
-    }
-    return 0;
-}
-int isPrime(long long n) {
-    if (n < 2) return 0;
-    int small[] = {2,3,5,7,11,13,17,19,23};
-    for (int i = 0; i < 9; i++) {
-        if (n == small[i]) return 1;
-        if (n % small[i] == 0) return 0;
-    }
-    long long d = n - 1;
-    while (d % 2 == 0) d /= 2;
-    for (int i = 0; i < 5; i++)
-        if (!millerTest(d, n)) return 0;
-    return 1;
-}
-int main() {
-    long long n;
-    printf("Enter number: ");
-    scanf("%lld", &n);
-    if (isPrime(n))
-        printf("probably Prime\n");
-    else
-        printf("composite\n");
-    return 0;
-}
-
-rabin cryptosystem                                                                                                                    #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-int modInverse(int a, int m) {
-    for (int x = 1; x < m; x++) {
-        if ((a * x) % m == 1)
-            return x;
-    }
-    return -1;
-}
-int modPow(int base, int exp, int mod) {
-    int result = 1;
-    base %= mod;
-    while (exp > 0) {
-        if (exp % 2 == 1)
-            result = (result * base) % mod;
-        base = (base * base) % mod;
-        exp /= 2;
-    }
-    return result;
-}
-int main() {
-    int p,q,n;
-    printf("enter p,q values : ", p,q);
-    scanf("%d%d", &p,&q);
-    n = p * q;
-    int message, ciphertext;
-    printf("Public key (n = p * q): %d\n", n);
-    printf("Enter message (M < %d): ", n);
-    scanf("%d", &message);
-    ciphertext = (message * message) % n;
-    printf("Encrypted ciphertext (C = M^2 mod n): %d\n", ciphertext);
-    int m1 = modPow(ciphertext, (p + 1) / 4, p);
-    int m2 = modPow(ciphertext, (q + 1) / 4, q);
-    int yp = modInverse(p, q);
-    int yq = modInverse(q, p);
-    int r = (yp * p * m2 + yq * q * m1) % n;
-    int s = (yp * p * m2 - yq * q * m1) % n;
-    if (r < 0) r += n;
-    if (s < 0) s += n;
-    printf("\nPossible decrypted messages:\n");
-    printf("1. %d\n", r);
-    printf("2. %d\n", n - r);
-    printf("3. %d\n", s);
-    printf("4. %d\n", n - s);
-    return 0;
-}
-
-
