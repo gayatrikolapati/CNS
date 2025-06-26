@@ -838,73 +838,45 @@ int main() {
 
 11(a) RSA
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
 int gcd(int a, int b) {
-    while (b != 0) {
-        int t = b;
-        b = a % b;
-        a = t;
-    }
-    return a;
+    return b == 0 ? a : gcd(b, a % b);
 }
 
 int modInverse(int e, int phi) {
-    int t = 0, newt = 1;
-    int r = phi, newr = e;
+    int t = 0, newt = 1, r = phi, newr = e, temp;
     while (newr != 0) {
         int q = r / newr;
-        int temp = newt;
-        newt = t - q * newt;
-        t = temp;
-        temp = newr;
-        newr = r - q * newr;
-        r = temp;
+        temp = newt; newt = t - q * newt; t = temp;
+        temp = newr; newr = r - q * newr; r = temp;
     }
-    if (r > 1) return -1;
-    if (t < 0) t += phi;
-    return t;
+    return t < 0 ? t + phi : t;
 }
 
-long long modExp(long long base, long long exp, long long mod) {
-    long long result = 1;
-    base %= mod;
+int power(int base, int exp, int mod) {
+    int res = 1;
     while (exp > 0) {
-        if (exp % 2 == 1) result = (result * base) % mod;
-        exp /= 2;
+        if (exp % 2 == 1) res = (res * base) % mod;
         base = (base * base) % mod;
+        exp /= 2;
     }
-    return result;
+    return res;
 }
 
 int main() {
-    int p, q;
-    printf("Enter two prime numbers: ");
-    scanf("%d %d", &p, &q);
+    int p = 3, q = 11;
     int n = p * q;
     int phi = (p - 1) * (q - 1);
-    int e;
-    for (e = 2; e < phi; e++) {
-        if (gcd(e, phi) == 1) break;
-    }
+    int e = 3;
+    while (gcd(e, phi) != 1) e++;
     int d = modInverse(e, phi);
-    if (d == -1) {
-        printf("Modular inverse not found.\n");
-        return 1;
-    }
-    printf("Public Key: (%d, %d)\n", e, n);
-    printf("Private Key: (%d, %d)\n", d, n);
-    int msg;
-    printf("Enter message to encrypt (as number): ");
-    scanf("%d", &msg);
-    long long enc = modExp(msg, e, n);
-    printf("Encrypted message: %lld\n", enc);
-    long long dec = modExp(enc, d, n);
-    printf("Decrypted message: %lld\n", dec);
+
+    int msg = 7;
+    int enc = power(msg, e, n);
+    int dec = power(enc, d, n);
+
+    printf("Original: %d\nEncrypted: %d\nDecrypted: %d\n", msg, enc, dec);
     return 0;
 }
 
